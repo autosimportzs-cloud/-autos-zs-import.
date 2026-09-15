@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AUTOS ZS IMPORT — Importación de vehículos · Autos ZS Import</title>
+<style>
+:root{--bg:#080b0e;--panel:#10161c;--panel2:#141c23;--line:#26313a;--text:#f4f5f6;--muted:#9ca6af;--gold:#d9ad63;--gold2:#f0cb8a;--green:#79c99a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 70% 5%,#17222b 0,#080b0e 35%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+a{color:inherit;text-decoration:none}.container{max-width:1180px;margin:auto;padding:0 24px}
+nav{height:72px;border-bottom:1px solid #1c242b;background:rgba(8,11,14,.9);backdrop-filter:blur(12px);position:sticky;top:0;z-index:20}
+.navin{height:100%;display:flex;align-items:center;justify-content:space-between}.logo{font-weight:900;letter-spacing:2px;font-size:18px}.logo span{display:block;font-size:8px;letter-spacing:3px;color:var(--muted);font-weight:500;margin-top:3px}
+.navlinks{display:flex;gap:28px;font-size:13px;color:#d7dce0}.navlinks a:hover{color:var(--gold2)}
+.btn{border:0;border-radius:9px;padding:13px 20px;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#101214;font-weight:800;cursor:pointer;box-shadow:0 8px 24px #0005}.btn.secondary{background:transparent;color:var(--text);border:1px solid #4b5862;box-shadow:none}.btn.small{padding:9px 13px;font-size:12px}
+.hero{min-height:540px;display:grid;grid-template-columns:1fr 1.1fr;align-items:center;gap:30px;padding:70px 0;background:linear-gradient(90deg,#080b0eea 0%,#080b0ebd 44%,#080b0e55 100%),url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=85') center/cover}
+.kicker{color:var(--gold2);font-size:11px;letter-spacing:4px;font-weight:800}.hero h1{font-size:clamp(42px,6vw,72px);line-height:.98;margin:15px 0}.hero p{color:#c2c8cd;font-size:17px;line-height:1.6;max-width:560px}.trust{display:flex;gap:26px;margin-top:34px;color:#cbd1d5;font-size:12px}.trust div{padding-left:16px;border-left:1px solid #34404a}.section{padding:78px 0}.sectionhead{margin-bottom:30px}.sectionhead .kicker{font-size:10px}.section h2{font-size:36px;margin:8px 0}.muted{color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.step,.card,.formbox,.adminbox{background:linear-gradient(145deg,#12191f,#0d1318);border:1px solid var(--line);border-radius:14px;padding:24px}.stepnum{width:34px;height:34px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold2);font-weight:800}.step h3{margin:18px 0 8px}.step p{color:var(--muted);font-size:13px;line-height:1.5}
+.config{display:grid;grid-template-columns:1.5fr .75fr;gap:20px}.formgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:11px;color:#c5ccd1;font-weight:700}.field input,.field select,.field textarea{width:100%;background:#0b1116;border:1px solid #2c3943;border-radius:8px;color:#f1f3f4;padding:12px;outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold)}textarea{min-height:90px;resize:vertical}.check{display:flex;gap:9px;align-items:center;font-size:12px;color:#c6ccd0;margin-top:25px}.quote{position:sticky;top:95px}.quote h3{font-size:21px;margin-top:0}.quote .notice{border:1px solid #3b4650;background:#0b1116;padding:14px;border-radius:9px;color:#aeb7be;font-size:12px;line-height:1.5;margin:20px 0}.quote .status{padding:12px;border-radius:8px;background:#182019;color:#9dd7b0;font-size:12px;margin:15px 0}.bigline{font-size:25px;font-weight:900;color:var(--gold2)}
+.cars{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.car{overflow:hidden;padding:0}.car img{width:100%;height:150px;object-fit:cover}.carbody{padding:16px}.car h3{font-size:15px;margin:0 0 9px}.specs{font-size:11px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}.price{font-size:19px;font-weight:900;margin-top:15px}
+.admin{background:#0b0f13;border-top:1px solid var(--line)}.adminbox{padding:26px}.adminbar{display:flex;justify-content:space-between;align-items:center;gap:15px}.requests{display:grid;gap:10px;margin-top:18px}.req{display:grid;grid-template-columns:1.2fr 1fr .8fr auto;gap:15px;align-items:center;background:#10171d;border:1px solid #25313a;padding:15px;border-radius:9px;font-size:12px}.badge{padding:6px 9px;border-radius:99px;background:#1d2630;color:#cdd5da}.req small{color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:35px 0;color:var(--muted);font-size:12px}
+.modal{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;z-index:50;padding:20px}.modal.show{display:flex}.modalbox{max-width:560px;width:100%;background:#10171d;border:1px solid #36434d;border-radius:15px;padding:26px}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.steps,.cars{grid-template-columns:repeat(2,1fr)}.config{grid-template-columns:1fr}.quote{position:static}.formgrid{grid-template-columns:repeat(2,1fr)}.navlinks{display:none}}
+@media(max-width:560px){.container{padding:0 16px}.hero{padding:50px 0}.steps,.cars,.formgrid{grid-template-columns:1fr}.hero h1{font-size:46px}.trust{flex-direction:column;gap:10px}}
+</style>
+</head>
+<body>
+<nav><div class="container navin">
+  <a class="logo" href="#">AUTOS ZS IMPORT<span>TU COCHE · SIN FRONTERAS</span></a>
+  <div class="navlinks"><a href="#como">Cómo funciona</a><a href="#configurador">Configurador</a><a href="#coches">Coches</a><a href="#admin">Panel</a></div>
+  <button class="btn small" onclick="document.querySelector('#configurador').scrollIntoView()">Solicita tu coche</button>
+</div></nav>
+
+<header class="hero"><div class="container" style="display:contents">
+  <div class="container" style="padding-right:0">
+    <div class="kicker">IMPORTACIÓN DE COCHES PREMIUM</div>
+    <h1>El coche que quieres.<br>Nosotros lo buscamos.</h1>
+    <p>Cuéntanos exactamente qué vehículo estás buscando y tu presupuesto. Nosotros localizamos opciones reales en Europa y te preparamos un presupuesto final para el coche concreto.</p>
+    <button class="btn" onclick="document.querySelector('#configurador').scrollIntoView()">Configura tu coche →</button>
+    <div class="trust"><div>✓ Vehículos revisados</div><div>◎ Toda Europa</div><div>€ Sin costes ocultos</div><div>🚚 Entrega en España</div></div>
+  </div>
+</div></header>
+
+<section class="section" id="como"><div class="container">
+  <div class="sectionhead"><div class="kicker">CÓMO FUNCIONA</div><h2>Tu coche, paso a paso</h2><p class="muted">La web no inventa un precio: primero recogemos tu solicitud y después calculamos el coste del vehículo real.</p></div>
+  <div class="steps">
+    <div class="step"><div class="stepnum">1</div><h3>Configuras</h3><p>Indicas marca, modelo, año, km, combustible, cambio, potencia, color y presupuesto.</p></div>
+    <div class="step"><div class="stepnum">2</div><h3>Buscamos</h3><p>Recibimos tu solicitud y buscamos vehículos que encajen con lo que quieres.</p></div>
+    <div class="step"><div class="stepnum">3</div><h3>Te presupuestamos</h3><p>Cuando tenemos un coche concreto, calculamos todos los gastos de importación.</p></div>
+    <div class="step"><div class="stepnum">4</div><h3>Importamos</h3><p>Gestionamos el proceso hasta que tu coche esté listo para entregártelo.</p></div>
+  </div>
+</div></section>
+
+<section class="section" id="configurador"><div class="container">
+ <div class="sectionhead"><div class="kicker">CONFIGURADOR</div><h2>Cuéntanos qué coche quieres</h2><p class="muted">Esto es una solicitud de búsqueda, no un presupuesto automático.</p></div>
+ <div class="config">
+  <div class="formbox"><form id="carForm">
+   <div class="formgrid">
+    <div class="field"><label>Nombre *</label><input id="name" required placeholder="Tu nombre"></div>
+    <div class="field"><label>WhatsApp / Teléfono *</label><input id="phone" required placeholder="+34 ..."></div>
+    <div class="field"><label>Email</label><input id="email" type="email" placeholder="tu@email.com"></div>
+    <div class="field"><label>Marca *</label><select id="brand" required><option value="">Selecciona</option><option>BMW</option><option>Mercedes-Benz</option><option>Audi</option><option>Porsche</option><option>Volkswagen</option><option>Land Rover</option><option>Otro</option></select></div>
+    <div class="field"><label>Modelo *</label><input id="model" required placeholder="Ej. M3 Competition"></div>
+    <div class="field"><label>Año mínimo</label><input id="year" type="number" min="1980" max="2030" placeholder="2022"></div>
+    <div class="field"><label>Kilómetros máximos</label><input id="km" type="number" placeholder="50000"></div>
+    <div class="field"><label>Combustible</label><select id="fuel"><option value="">Cualquiera</option><option>Gasolina</option><option>Diésel</option><option>Híbrido</option><option>Eléctrico</option></select></div>
+    <div class="field"><label>Cambio</label><select id="gear"><option value="">Cualquiera</option><option>Automático</option><option>Manual</option></select></div>
+    <div class="field"><label>Potencia mínima (CV)</label><input id="power" type="number" placeholder="300"></div>
+    <div class="field"><label>Color</label><input id="color" placeholder="Negro, blanco..."></div>
+    <div class="field"><label>Presupuesto máximo (€) *</label><input id="budget" type="number" required placeholder="40000"></div>
+    <div class="field full"><label>Equipamiento deseado</label><input id="equipment" placeholder="Techo solar, asientos deportivos, paquete M, etc."></div>
+    <div class="field full"><label>Comentarios / requisitos especiales</label><textarea id="notes" placeholder="Cualquier detalle que debamos tener en cuenta..."></textarea></div>
+   </div>
+   <label class="check"><input id="finance" type="checkbox"> Me interesa financiación</label>
+   <br><button class="btn" type="submit">Enviar solicitud de búsqueda →</button>
+  </form></div>
+  <aside class="formbox quote">
+   <h3>Tu presupuesto</h3>
+   <p class="muted">Aquí no te vamos a dar una cifra ficticia.</p>
+   <div class="notice">Primero necesitamos encontrar un <b>vehículo concreto</b>. El precio final dependerá del precio de compra, país de origen, transporte, impuestos, matriculación y demás costes aplicables.</div>
+   <div class="status">✓ Solicitud → búsqueda real → presupuesto del vehículo concreto</div>
+   <p class="muted" style="font-size:12px">Cuando encontremos una opción, podremos desglosarte cada coste antes de tomar una decisión.</p>
+  </aside>
+ </div>
+</div></section>
+
+<section class="section" id="coches"><div class="container">
+ <div class="sectionhead"><div class="kicker">EJEMPLOS</div><h2>Coches que podemos buscar</h2></div>
+ <div class="cars">
+  <div class="card car"><img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=900&q=80"><div class="carbody"><h3>BMW M3 Competition</h3><div class="specs">2022 · 32.000 km · Gasolina · Auto</div><div class="price">Desde solicitud</div></div></div>
+  <div class="card car"><img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=900&q=80"><div class="carbody"><h3>Mercedes-Benz GLC AMG</h3><div class="specs">2023 · 28.000 km · Híbrido · Auto</div><div class="price">Desde solicitud</div></div></div>
+  <div class="card car"><img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=900&q=80"><div class="carbody"><h3>Audi RS3 Sportback</h3><div class="specs">2022 · 25.000 km · Gasolina · Auto</div><div class="price">Desde solicitud</div></div></div>
+  <div class="card car"><img src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=80"><div class="carbody"><h3>Porsche Cayenne</h3><div class="specs">2021 · 60.000 km · Diésel · Auto</div><div class="price">Desde solicitud</div></div></div>
+ </div>
+</div></section>
+
+<section class="section admin" id="admin"><div class="container"><div class="adminbox">
+ <div class="adminbar"><div><div class="kicker">PANEL DE DEMOSTRACIÓN</div><h2 style="margin:7px 0">Solicitudes recibidas</h2><p class="muted" style="margin:0">En esta primera versión se guardan en el navegador.</p></div><button class="btn secondary small" onclick="clearRequests()">Borrar solicitudes</button></div>
+ <div class="requests" id="requests"><div class="muted">Todavía no hay solicitudes.</div></div>
+</div></div></section>
+
+<footer><div class="container" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap"><div><b style="color:#fff">AUTOS ZS IMPORT</b><br>Importación de vehículos · Autos ZS Import · Europa → España</div><div>© 2026 Import Cars · Primera versión de demostración</div></div></footer>
+
+<div class="modal" id="modal"><div class="modalbox"><h2>Solicitud enviada ✓</h2><p class="muted">Perfecto. Hemos guardado tu solicitud de búsqueda. En una versión conectada, aquí también podríamos enviártela por WhatsApp/email y avisarte cuando encontremos una opción.</p><button class="btn" onclick="closeModal()">Cerrar</button></div></div>
+
+<script>
+const $=id=>document.getElementById(id);
+function getRequests(){try{return JSON.parse(localStorage.getItem('importCarsRequests')||'[]')}catch(e){return[]}}
+function saveRequests(x){localStorage.setItem('importCarsRequests',JSON.stringify(x))}
+function render(){
+ const box=$('requests'), rs=getRequests();
+ if(!rs.length){box.innerHTML='<div class="muted">Todavía no hay solicitudes.</div>';return}
+ box.innerHTML=rs.map((r,i)=>`<div class="req"><div><b>${r.name}</b><br><small>${r.phone}${r.email?' · '+r.email:''}</small></div><div><b>${r.brand} ${r.model}</b><br><small>${r.year||'Sin año'} · ${r.km?r.km.toLocaleString('es-ES')+' km':'km libre'}</small></div><div><b>${Number(r.budget).toLocaleString('es-ES')} €</b><br><small>${r.fuel||'Cualquiera'} · ${r.gear||'Cualquiera'}</small></div><div><span class="badge">Nueva</span></div></div>`).join('')
+}
+$('carForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const r={name:$('name').value.trim(),phone:$('phone').value.trim(),email:$('email').value.trim(),brand:$('brand').value,model:$('model').value.trim(),year:$('year').value,km:$('km').value?Number($('km').value):null,fuel:$('fuel').value,gear:$('gear').value,power:$('power').value,color:$('color').value,equipment:$('equipment').value,notes:$('notes').value,budget:Number($('budget').value),finance:$('finance').checked,date:new Date().toISOString()};
+ const rs=getRequests();rs.unshift(r);saveRequests(rs);render();$('modal').classList.add('show');e.target.reset();
+});
+function closeModal(){$('modal').classList.remove('show')}
+function clearRequests(){if(confirm('¿Borrar todas las solicitudes de este navegador?')){localStorage.removeItem('importCarsRequests');render()}}
+render();
+</script>
+</body></html>
