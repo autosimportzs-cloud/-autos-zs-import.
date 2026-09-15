@@ -54,12 +54,14 @@ footer{border-top:1px solid var(--line);padding:35px 0;color:var(--muted);font-s
 <section class="section" id="configurador"><div class="container">
  <div class="sectionhead"><div class="kicker">CONFIGURADOR</div><h2>Cuéntanos qué coche quieres</h2><p class="muted">Esto es una solicitud de búsqueda, no un presupuesto automático.</p></div>
  <div class="config">
-  <div class="formbox"><form id="carForm">
+  <div class="formbox"><form id="carForm" action="https://formsubmit.co/ajax/autosimportzs@gmail.com" method="POST">
    <div class="formgrid">
     <div class="field"><label>Nombre *</label><input id="name" required placeholder="Tu nombre"></div>
     <div class="field"><label>WhatsApp / Teléfono *</label><input id="phone" required placeholder="+34 ..."></div>
     <div class="field"><label>Email</label><input id="email" type="email" placeholder="tu@email.com"></div>
-    <div class="field"><label>Marca *</label><select id="brand" required><option value="">Selecciona</option><option>BMW</option><option>Mercedes-Benz</option><option>Audi</option><option>Porsche</option><option>Volkswagen</option><option>Land Rover</option><option>Otro</option></select></div>
+    <div class="field"><label>Marca *</label><select id="brand" required><option value="">Selecciona</option>
+<option>Abarth</option><option>Alfa Romeo</option><option>Alpine</option><option>Aston Martin</option><option>Audi</option><option>Bentley</option><option>BMW</option><option>BYD</option><option>Cadillac</option><option>Cupra</option><option>Citroën</option><option>Dacia</option><option>Daewoo</option><option>Daihatsu</option><option>DS</option><option>Ferrari</option><option>Fiat</option><option>Ford</option><option>Honda</option><option>Hyundai</option><option>Infiniti</option><option>Isuzu</option><option>Jaguar</option><option>Jeep</option><option>Kia</option><option>Lamborghini</option><option>Lancia</option><option>Land Rover</option><option>Lexus</option><option>Lotus</option><option>Maserati</option><option>Mazda</option><option>McLaren</option><option>Mercedes-Benz</option><option>MG</option><option>Mini</option><option>Mitsubishi</option><option>Nissan</option><option>Opel</option><option>Peugeot</option><option>Polestar</option><option>Porsche</option><option>Renault</option><option>Rolls-Royce</option><option>Saab</option><option>Seat</option><option>Skoda</option><option>Smart</option><option>Subaru</option><option>Suzuki</option><option>Tesla</option><option>Toyota</option><option>Volkswagen</option><option>Volvo</option><option>Otra marca</option></select></div>
+    <div class="field" id="otherBrandField" style="display:none"><label>Escribe la marca</label><input id="otherBrand" placeholder="Ej. Koenigsegg"></div>
     <div class="field"><label>Modelo *</label><input id="model" required placeholder="Ej. M3 Competition"></div>
     <div class="field"><label>Año mínimo</label><input id="year" type="number" min="1980" max="2030" placeholder="2022"></div>
     <div class="field"><label>Kilómetros máximos</label><input id="km" type="number" placeholder="50000"></div>
@@ -95,30 +97,57 @@ footer{border-top:1px solid var(--line);padding:35px 0;color:var(--muted);font-s
 </div></section>
 
 <section class="section admin" id="admin"><div class="container"><div class="adminbox">
- <div class="adminbar"><div><div class="kicker">PANEL DE DEMOSTRACIÓN</div><h2 style="margin:7px 0">Solicitudes recibidas</h2><p class="muted" style="margin:0">En esta primera versión se guardan en el navegador.</p></div><button class="btn secondary small" onclick="clearRequests()">Borrar solicitudes</button></div>
+ <div class="adminbar"><div><div class="kicker">PANEL DE DEMOSTRACIÓN</div><h2 style="margin:7px 0">Solicitudes recibidas</h2><p class="muted" style="margin:0">Las solicitudes se envían al Gmail de AUTOS ZS IMPORT y además se guarda una copia local de seguridad.</p></div><button class="btn secondary small" onclick="clearRequests()">Borrar solicitudes</button></div>
  <div class="requests" id="requests"><div class="muted">Todavía no hay solicitudes.</div></div>
 </div></div></section>
 
 <footer><div class="container" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap"><div><b style="color:#fff">AUTOS ZS IMPORT</b><br>Importación de vehículos · Autos ZS Import · Europa → España</div><div>© 2026 Import Cars · Primera versión de demostración</div></div></footer>
 
-<div class="modal" id="modal"><div class="modalbox"><h2>Solicitud enviada ✓</h2><p class="muted">Perfecto. Hemos guardado tu solicitud de búsqueda. En una versión conectada, aquí también podríamos enviártela por WhatsApp/email y avisarte cuando encontremos una opción.</p><button class="btn" onclick="closeModal()">Cerrar</button></div></div>
+<div class="modal" id="modal"><div class="modalbox"><h2>Solicitud enviada ✓</h2><p class="muted">Perfecto. Hemos recibido tu solicitud. Te contactaremos cuando encontremos una opción que encaje con lo que buscas.</p><button class="btn" onclick="closeModal()">Cerrar</button></div></div>
 
 <script>
 const $=id=>document.getElementById(id);
+const FORM_ENDPOINT='https://formsubmit.co/ajax/autosimportzs@gmail.com';
 function getRequests(){try{return JSON.parse(localStorage.getItem('importCarsRequests')||'[]')}catch(e){return[]}}
 function saveRequests(x){localStorage.setItem('importCarsRequests',JSON.stringify(x))}
+function esc(v){return String(v??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}
 function render(){
  const box=$('requests'), rs=getRequests();
- if(!rs.length){box.innerHTML='<div class="muted">Todavía no hay solicitudes.</div>';return}
- box.innerHTML=rs.map((r,i)=>`<div class="req"><div><b>${r.name}</b><br><small>${r.phone}${r.email?' · '+r.email:''}</small></div><div><b>${r.brand} ${r.model}</b><br><small>${r.year||'Sin año'} · ${r.km?r.km.toLocaleString('es-ES')+' km':'km libre'}</small></div><div><b>${Number(r.budget).toLocaleString('es-ES')} €</b><br><small>${r.fuel||'Cualquiera'} · ${r.gear||'Cualquiera'}</small></div><div><span class="badge">Nueva</span></div></div>`).join('')
+ if(!rs.length){box.innerHTML='<div class="muted">Todavía no hay solicitudes locales.</div>';return}
+ box.innerHTML=rs.map(r=>`<div class="req"><div><b>${esc(r.name)}</b><br><small>${esc(r.phone)}${r.email?' · '+esc(r.email):''}</small></div><div><b>${esc(r.brand)} ${esc(r.model)}</b><br><small>${esc(r.year||'Sin año')} · ${r.km?Number(r.km).toLocaleString('es-ES')+' km':'km libre'}</small></div><div><b>${Number(r.budget).toLocaleString('es-ES')} €</b><br><small>${esc(r.fuel||'Cualquiera')} · ${esc(r.gear||'Cualquiera')}</small></div><div><span class="badge">Enviada</span></div></div>`).join('')
 }
-$('carForm').addEventListener('submit',e=>{
+$('brand').addEventListener('change',()=>{
+ $('otherBrandField').style.display=$('brand').value==='Otra marca'?'flex':'none';
+ if($('brand').value!=='Otra marca') $('otherBrand').value='';
+});
+$('carForm').addEventListener('submit',async e=>{
  e.preventDefault();
- const r={name:$('name').value.trim(),phone:$('phone').value.trim(),email:$('email').value.trim(),brand:$('brand').value,model:$('model').value.trim(),year:$('year').value,km:$('km').value?Number($('km').value):null,fuel:$('fuel').value,gear:$('gear').value,power:$('power').value,color:$('color').value,equipment:$('equipment').value,notes:$('notes').value,budget:Number($('budget').value),finance:$('finance').checked,date:new Date().toISOString()};
- const rs=getRequests();rs.unshift(r);saveRequests(rs);render();$('modal').classList.add('show');e.target.reset();
+ const button=e.target.querySelector('button[type="submit"]');
+ const original=button.textContent; button.disabled=true; button.textContent='Enviando…';
+ const brand=$('brand').value==='Otra marca'?$('otherBrand').value.trim():$('brand').value;
+ if(!brand){alert('Indica la marca del vehículo.');button.disabled=false;button.textContent=original;return}
+ const r={name:$('name').value.trim(),phone:$('phone').value.trim(),email:$('email').value.trim(),brand,model:$('model').value.trim(),year:$('year').value,km:$('km').value?Number($('km').value):null,fuel:$('fuel').value,gear:$('gear').value,power:$('power').value,color:$('color').value,equipment:$('equipment').value,notes:$('notes').value,budget:Number($('budget').value),finance:$('finance').checked,date:new Date().toISOString()};
+ const formData=new FormData();
+ Object.entries(r).forEach(([k,v])=>formData.append(k,typeof v==='boolean'?(v?'Sí':'No'):(v??'')));
+ formData.append('_subject','🚗 Nueva solicitud de importación — '+r.brand+' '+r.model);
+ formData.append('_template','table');
+ formData.append('_captcha','true');
+ formData.append('_url',window.location.href);
+ if(r.email) formData.append('_replyto',r.email);
+ try{
+   const response=await fetch(FORM_ENDPOINT,{method:'POST',body:formData,headers:{Accept:'application/json'}});
+   const data=await response.json().catch(()=>({}));
+   if(!response.ok || data.success===false) throw new Error(data.message||'No se pudo enviar');
+   const rs=getRequests();rs.unshift(r);saveRequests(rs);render();e.target.reset();$('otherBrandField').style.display='none';$('modal').classList.add('show');
+ }catch(err){
+   // Keep a local backup so the request is not lost if the email service is temporarily unavailable.
+   const rs=getRequests();rs.unshift({...r,sendError:true});saveRequests(rs);render();
+   alert('No hemos podido enviar la solicitud por email todavía. La hemos guardado en este navegador. Revisa que hayas activado FormSubmit en el primer envío y vuelve a intentarlo.');
+   console.error(err);
+ }finally{button.disabled=false;button.textContent=original}
 });
 function closeModal(){$('modal').classList.remove('show')}
-function clearRequests(){if(confirm('¿Borrar todas las solicitudes de este navegador?')){localStorage.removeItem('importCarsRequests');render()}}
+function clearRequests(){if(confirm('¿Borrar todas las solicitudes guardadas en este navegador?')){localStorage.removeItem('importCarsRequests');render()}}
 render();
 </script>
 </body></html>
